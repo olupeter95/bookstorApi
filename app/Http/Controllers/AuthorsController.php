@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Author;
+use Illuminate\Http\Request;
+use App\Http\Resources\AuthorsResource;
 use App\Http\Requests\StoreAuthorRequest;
 use App\Http\Requests\UpdateAuthorRequest;
-use App\Http\Resources\AuthorsResource;
 
 class AuthorsController extends Controller
 {
@@ -37,8 +39,13 @@ class AuthorsController extends Controller
      */
     public function store(StoreAuthorRequest $request)
     {
-        //
-    }
+        $faker = \Faker\Factory::create(1); 
+        $author = Author::create([
+            'name' => fake()->name(),
+            'created_at' => Carbon::now(),
+       ]);
+       return new AuthorsResource($author);
+    } 
 
     /**
      * Display the specified resource.
@@ -71,7 +78,10 @@ class AuthorsController extends Controller
      */
     public function update(UpdateAuthorRequest $request, Author $author)
     {
-        //
+        $author->update([
+            'name' => $request->input('name')
+        ]);
+        return new AuthorsResource($author);
     }
 
     /**
@@ -82,6 +92,7 @@ class AuthorsController extends Controller
      */
     public function destroy(Author $author)
     {
-        //
+        $author->delete();
+        return response('null', 204);
     }
 }
