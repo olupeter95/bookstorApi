@@ -42,7 +42,6 @@ class AuthorsController extends Controller
         $faker = \Faker\Factory::create(1); 
         $author = Author::create([
             'name' => fake()->name(),
-            'created_at' => Carbon::now(),
        ]);
        return new AuthorsResource($author);
     } 
