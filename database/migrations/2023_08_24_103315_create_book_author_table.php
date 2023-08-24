@@ -23,8 +23,7 @@ return new class extends Migration
             $table->foreign('book_id')
                 ->references('id')
                 ->on('books')
-                ->cascadeOnDelete();
-                
+                ->cascadeOnDelete();       
         });
     }
 
